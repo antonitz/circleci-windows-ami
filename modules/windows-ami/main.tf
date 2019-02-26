@@ -86,6 +86,14 @@ resource "aws_security_group" "windows_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+    // rdp access
+  ingress {
+    from_port   = 3389
+    to_port     = 3389
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   // Outbound internet access
   egress {
     from_port   = 0
