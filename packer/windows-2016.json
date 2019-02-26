@@ -67,10 +67,8 @@
         },
         {
             "type": "ansible-local",
-            "playbook_dir": "../ansible",
-            "playbook_paths": "../ansible",
-            "playbook_file": "../ansible/iis.yml",
-            "extra_arguments": [ "-vvv", "-e 'ansible_python_interpreter=/usr/bin/python'" ]
+            "playbook_dir": "/ansible",
+            "playbook_file": "ansible/iis.yml"
         },
         {
             "type": "shell",
