@@ -2,7 +2,6 @@
     "variables": {
         "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
         "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-        "region": "{{env `REGION`}}",
         "ami_name": "windows-server-2016-base-encrypted",
         "app_name": "iis",
         "aws_availability_zone": "us-east-1c",
@@ -27,7 +26,7 @@
                     "root-device-type": "ebs"
                 },
                 "owners": [
-                    "746108199066"
+                    ""
                 ],
                 "most_recent": true
             },
