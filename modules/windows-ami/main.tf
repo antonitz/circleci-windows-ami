@@ -1,16 +1,16 @@
 /* User Data Scripts  - file locale below called from env pwd */
-data "template_file" "userdata" {
+/* data "template_file" "userdata" {
   template = "${file("./modules/windows-master/userdata.sh")}"
-}
+} */
 
-/* Lookup latest Amazon Linux AMI */
+/* Lookup latest Amazon Windows AMI */
 data "aws_ami" "windows_ami" {
   most_recent = true
   owners     = ["self", "amazon"]
 
   filter {
     name   = "name"
-    values = ["*amzn-ami-*-x86_64-gp2"]
+    values = ["*windows-*-x86_64-gp2"]
   }
 }
 # Master Server
