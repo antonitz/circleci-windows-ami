@@ -10,7 +10,7 @@ data "aws_ami" "windows_ami" {
 
   filter {
     name   = "name"
-    values = ["*windows-*-x86_64-gp2"]
+    values = ["*Windows_Server-*"]
   }
 }
 # Master Server

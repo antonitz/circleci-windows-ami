@@ -10,6 +10,7 @@
         "aws_region": "us-east-1",
         "aws_vpc": "vpc-037767829ff370d18",
         "aws_subnet": "subnet-02f9d494ee816a422",
+        "aws_profile": "antonicloud",
         "server_version": "2016"
     },
     "builders": [
