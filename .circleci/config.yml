@@ -25,9 +25,6 @@ jobs:
       - run:
           name: Build AMI
           command: |-
-            export AWS_ACCESS_KEY_ID=`cat assume_role | jq .Credentials.AccessKeyId | cut -d '"' -f 2`
-            export AWS_SECRET_ACCESS_KEY=`cat assume_role | jq .Credentials.SecretAccessKey | cut -d '"' -f 2`
-            export AWS_SESSION_TOKEN=`cat assume_role | jq .Credentials.SessionToken | cut -d '"' -f 2`
             cd packer && PACKER_LOG=1 AWS_TIMEOUT_SECONDS=600 packer build -machine-readable windows-2016.json | tee build.log
             export AMI_ID=`grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2`
             while [[ `aws ec2 describe-images --image-ids $AMI_ID --region us-east-1 | jq .Images[0].State | sed -e 's/^"//' -e 's/"$//'` != "available" ]]; \

@@ -77,6 +77,12 @@
             "playbook_paths": "../ansible",
             "playbook_file": "../ansible/iis.yml",
             "extra_arguments": [ "-vvv", "-e 'ansible_python_interpreter=/usr/bin/python'" ]
-          }
+        },
+        {
+            "type": "shell",
+            "inline": [
+              "sudo yum remove -y python2-boto3 ansible"
+            ]
+        }
     ]
 }
