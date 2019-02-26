@@ -1,0 +1,79 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+        "aws_session_token": "{{env `AWS_SESSION_TOKEN`}}",
+        "region": "{{env `REGION`}}",
+        "ami_name": "windows-server-2016-base-encrypted",
+        "app_name": "iis",
+        "aws_availability_zone": "us-east-1c",
+        "aws_region": "us-east-1",
+        "aws_vpc": "vpc-037767829ff370d18",
+        "aws_subnet": "subnet-02f9d494ee816a422",
+        "aws_profile": "antonicloud",
+        "server_version": "2016"
+    },
+    "builders": [
+        {
+            "type": "amazon-ebs",
+            "access_key": "{{user `aws_access_key`}}",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "token": "{{user `aws_session_token`}}",
+            "region": "{{user `region`}}",
+            "source_ami_filter": {
+                "filters": {
+                    "virtualization-type": "hvm",
+                    "name": "*Windows_Server-{{ user `server_version` }}-English-Full-Base-*",
+                    "root-device-type": "ebs"
+                },
+                "owners": [
+                    "746108199066"
+                ],
+                "most_recent": true
+            },
+            "instance_type": "t2.medium",
+            "ami_name": "{{user `ami_name`}}-{{isotime \"2006-01-02\"}}-{{timestamp}}",
+            "user_data_file": "./bootstrap_win.txt",
+            "communicator": "winrm",
+            "winrm_username": "Administrator",
+            "winrm_timeout": "5m",
+            "winrm_use_ssl": true,
+            "winrm_insecure": true,
+            "force_deregister": true,
+            "force_delete_snapshot": true,
+            "shutdown_behavior": "terminate",
+            "encrypt_boot": true,
+            "associate_public_ip_address": true,
+            "run_tags": {
+                "Name": "packer-build-{{user `ami_name`}}-{{isotime \"2006-01-02\"}}-{{timestamp}}",
+                "owner": "user",
+                "group": "slalom",
+                "cost-center": "000000",
+                "env": "dev"
+            },
+            "tags": {
+                "Name": "Windows Server {{user `server_version`}} Encrypted Base Image",
+                "owner": "user",
+                "group": "slalom",
+                "cost-center": "000000",
+                "env": "dev",
+                "created_by_ami_pipeline": "true"
+            }
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "powershell",
+            "inline": [
+                "echo Hello from Packer!"
+            ]
+        },
+        {
+            "type": "ansible-local",
+            "playbook_dir": "../ansible",
+            "playbook_paths": "../ansible",
+            "playbook_file": "../ansible/iis.yml",
+            "extra_arguments": [ "-vvv", "-e 'ansible_python_interpreter=/usr/bin/python'" ]
+          }
+    ]
+}
