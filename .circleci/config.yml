@@ -72,9 +72,11 @@ workflows:
               only:
                 - master
       - packer_build:
+          context: antoni-global
           requires:
             - packer_validate
       - tf_plan:
+          context: antoni-global
           requires:
             - packer_build
       - tf_apply_approval:
@@ -82,5 +84,6 @@ workflows:
             - tf_plan
           type: approval
       - tf_apply:
+          context: antoni-global
           requires:
             - tf_apply_approval
