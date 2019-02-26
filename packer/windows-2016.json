@@ -4,7 +4,6 @@
         "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
         "ami_name": "windows-server-2016-base-encrypted",
         "app_name": "iis",
-        "aws_availability_zone": "us-east-1c",
         "aws_region": "us-east-1",
         "aws_vpc": "vpc-037767829ff370d18",
         "aws_subnet": "subnet-02f9d494ee816a422",
@@ -18,7 +17,6 @@
             "region": "{{user `aws_region`}}",
             "vpc_id": "{{user `aws_vpc`}}",
             "subnet_id": "{{user `aws_subnet`}}",
-            "availability_zone": "{{user `aws_availability_zone`}}",
             "source_ami_filter": {
                 "filters": {
                     "virtualization-type": "hvm",
