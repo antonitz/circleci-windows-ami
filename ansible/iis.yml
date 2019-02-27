@@ -1,5 +1,5 @@
 ---
-- hosts: windows
+- hosts: all
   vars:
     ansible_site_path: "c:\\inetpub\\wwwroot\\ansibletest"
     staging_path: "c:\\deploy"

@@ -1,4 +1,4 @@
-- hosts: win-server
+- hosts: all
   gather_facts: yes
   tasks:
   - name: Install IIS feature on {{ inventory_hostname }}
