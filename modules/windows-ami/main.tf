@@ -3,6 +3,15 @@
   template = "${file("./modules/windows-master/userdata.sh")}"
 } */
 
+terraform {
+  backend "s3" {
+    bucket  = "antonicloud-terraform-state"
+    key     = "terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
+  }
+}
+
 /* Lookup latest Amazon Windows AMI */
 data "aws_ami" "windows_ami" {
   most_recent = true
