@@ -60,7 +60,7 @@ jobs:
             terraform plan
   tf_apply:
     docker:
-      - image: hashicorp/terraform:0.9.9
+      - image: hashicorp/terraform
     working_directory: ~/terraform
     steps:
       - add_ssh_keys:
