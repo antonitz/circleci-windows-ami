@@ -37,14 +37,11 @@ jobs:
   tf_init:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/modules/windows-ami
+    working_directory: ~/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Add GitHub to the list of trusted hosts
-          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - run:
           name: Run Terraform Initialization
           command: |
@@ -52,14 +49,11 @@ jobs:
   tf_plan:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/modules/windows-ami
+    working_directory: ~/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Add GitHub to the list of trusted hosts
-          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - run:
           name: Run Terraform plan
           command: |
@@ -67,14 +61,11 @@ jobs:
   tf_apply:
     docker:
       - image: hashicorp/terraform:0.9.9
-    working_directory: ~/modules/windows-ami
+    working_directory: ~/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Add GitHub to the list of trusted hosts
-          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - run:
           name: Run Terraform apply
           command: terraform apply
