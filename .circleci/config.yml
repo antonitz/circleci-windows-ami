@@ -74,15 +74,15 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - packer_validate:
-          filters:
-            branches:
-              only:
-                - master
-      - packer_build:
-          context: antoni-global
-          requires:
-            - packer_validate
+      # - packer_validate:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - packer_build:
+      #     context: antoni-global
+      #     requires:
+      #       - packer_validate
       - tf_init:
           context: antoni-global
           requires:
