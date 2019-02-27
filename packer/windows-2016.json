@@ -61,6 +61,7 @@
     "provisioners": [
         {
             "type": "powershell",
+            "environment_vars": "WINRMPASS={{.WinRMPassword}}",
             "inline": [
                 "echo Hello from Packer!"
             ]
