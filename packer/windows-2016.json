@@ -69,12 +69,6 @@
             "type": "ansible-local",
             "playbook_dir": "../ansible",
             "playbook_file": "../ansible/website.yml"
-        },
-        {
-            "type": "shell",
-            "inline": [
-              "sudo yum remove -y python2-boto3 ansible"
-            ]
         }
     ]
 }
