@@ -51,6 +51,7 @@ jobs:
       - image: hashicorp/terraform
     working_directory: /tmp/workspace/terraform
     steps:
+      - checkout
       - add_ssh_keys:
           fingerprints:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
