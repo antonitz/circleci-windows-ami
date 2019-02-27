@@ -4,12 +4,7 @@
 } */
 
 terraform {
-  backend "s3" {
-    bucket  = "antonicloud-terraform-state"
-    key     = "terraform.tfstate"
-    region  = "us-east-1"
-    encrypt = true
-  }
+  backend "s3" {}
 }
 
 /* Lookup latest Amazon Windows AMI */
