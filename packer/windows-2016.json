@@ -66,15 +66,6 @@
                 "echo 'Hello from Packer!'",
                 "dir c:\\"
             ]
-        },
-        {
-            "type": "ansible-local",
-            "playbook_dir": "../ansible",
-            "playbook_file": "../ansible/website.yml",
-            "extra_arguments": [
-                "--connection", "packer",
-                "--extra-vars", "ansible_shell_type=powershell ansible_shell_executable=None"
-              ]
         }
     ]
 }
