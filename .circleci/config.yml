@@ -37,7 +37,7 @@ jobs:
   tf_init:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/terraform
+    working_directory: /tmp/workspace/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -49,7 +49,7 @@ jobs:
   tf_plan:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/terraform
+    working_directory: /tmp/workspace/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
@@ -61,7 +61,7 @@ jobs:
   tf_apply:
     docker:
       - image: hashicorp/terraform
-    working_directory: ~/terraform
+    working_directory: /tmp/workspace/terraform
     steps:
       - add_ssh_keys:
           fingerprints:
