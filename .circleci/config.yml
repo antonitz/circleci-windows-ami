@@ -47,7 +47,7 @@ jobs:
       - run:
           name: Run Terraform plan
           command: |
-            terraform plan-all --target circleci-windows-ami/modules/windows-ami
+            terraform plan --target circleci-windows-ami/modules/windows-ami
   tf_apply:
     docker:
       - image: hashicorp/terraform:0.9.9
@@ -61,7 +61,7 @@ jobs:
           command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
       - run:
           name: Run Terraform apply
-          command: terraform apply-all --target circleci-windows-ami/modules/windows-ami
+          command: terraform apply --target circleci-windows-ami/modules/windows-ami
 workflows:
   version: 2
   build-and-deploy:
