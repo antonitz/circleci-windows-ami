@@ -3,9 +3,9 @@ provider "aws" {
   region  = "${var.region}"
 }
 
-terraform {
-  backend "s3" {}
-}
+# terraform {
+#   backend "s3" {}
+# }
 
 /* Lookup latest Amazon Windows AMI */
 data "aws_ami" "windows_ami" {
