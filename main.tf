@@ -1,14 +1,9 @@
 provider "aws" {
-  profile = "${var.profile}"
   region  = "${var.region}"
 }
 
 terraform {
-  backend "s3" {
-    bucket = "antonicloud-terraform-state"
-    key    = "terraform.tfstate"
-    region = "us-east-1"
-  }
+  backend "s3" {}
 }
 
 /* Lookup latest Amazon Windows AMI */
