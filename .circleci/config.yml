@@ -46,15 +46,11 @@ jobs:
           name: Run Terraform Initialization
           command: |
             terraform init
-      - persist_to_workspace:
-          root: /main.tf
   tf_plan:
     docker:
       - image: hashicorp/terraform
     working_directory:
     steps:
-      - attach_workspace:
-          at: /main.tf
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -68,8 +64,6 @@ jobs:
       - image: hashicorp/terraform
     working_directory:
     steps:
-      - attach_workspace:
-          at: /tmp/build
       - checkout
       - add_ssh_keys:
           fingerprints:
