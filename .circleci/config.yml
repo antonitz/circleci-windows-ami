@@ -70,7 +70,8 @@ jobs:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
       - run:
           name: Run Terraform apply
-          command: terraform apply
+          command: |
+            terraform apply
 workflows:
   version: 2
   build-and-deploy:
