@@ -34,18 +34,18 @@ jobs:
             done
           no_output_timeout: 10m
 
-  tf_init:
-    docker:
-      - image: hashicorp/terraform
-    working_directory: /tmp/workspace/terraform
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Run Terraform Initialization
-          command: |
-            terraform init
+  # tf_init:
+  #   docker:
+  #     - image: hashicorp/terraform
+  #   working_directory: /tmp/workspace/terraform
+  #   steps:
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
+  #     - run:
+  #         name: Run Terraform Initialization
+  #         command: |
+  #           terraform init
   tf_plan:
     docker:
       - image: hashicorp/terraform
@@ -83,8 +83,8 @@ workflows:
       #     context: antoni-global
       #     requires:
       #       - packer_validate
-      - tf_init:
-          context: antoni-global
+      # - tf_init:
+      #     context: antoni-global
           # requires:
           #   - packer_build
       - tf_plan:
