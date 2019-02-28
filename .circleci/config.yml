@@ -36,7 +36,7 @@ jobs:
   tf_init:
     docker:
       - image: hashicorp/terraform
-    working_directory:
+    working_directory: /tmp/build
     steps:
       - checkout
       - add_ssh_keys:
