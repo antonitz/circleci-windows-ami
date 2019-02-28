@@ -94,6 +94,4 @@ workflows:
       #     #   - packer_build
       - tf_apply:
           context: antoni-global
-           # requires:
-          #   - tf_plan
           type: approval
