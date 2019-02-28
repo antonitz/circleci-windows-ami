@@ -83,8 +83,8 @@ workflows:
       #     context: antoni-global
       #     requires:
       #       - packer_validate
-      # - tf_init:
-      #     context: antoni-global
+      - tf_init:
+          context: antoni-global
           # requires:
           #   - packer_build
       - tf_plan:
