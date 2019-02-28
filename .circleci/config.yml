@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Run Terraform Initialization
           command: |
-            terraform init -input=false
+            terraform init
   tf_plan:
     docker:
       - image: hashicorp/terraform
@@ -58,7 +58,6 @@ jobs:
       - run:
           name: Run Terraform plan
           command: |
-            ls -la
             terraform plan
   tf_apply:
     docker:
@@ -75,23 +74,23 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - packer_validate:
-          filters:
-            branches:
-              only:
-                - master
-      - packer_build:
-          context: antoni-global
-          requires:
-            - packer_validate
+      # - packer_validate:
+      #     filters:
+      #       branches:
+      #         only:
+      #           - master
+      # - packer_build:
+      #     context: antoni-global
+      #     requires:
+      #       - packer_validate
       - tf_init:
           context: antoni-global
-          requires:
-            - packer_build
+          # requires:
+          #   - packer_build
       - tf_plan:
           context: antoni-global
-          requires:
-            - packer_build
+          # requires:
+          #   - packer_build
       - tf_apply:
           context: antoni-global
           requires:
