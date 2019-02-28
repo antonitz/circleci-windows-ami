@@ -45,7 +45,7 @@ jobs:
       - run:
           name: Run Terraform Initialization
           command: |
-            terraform init -backend=true -backend-config="bucket=antonicloud-terraform-state" -backend-config="key=terraform.tfstate" -force-copy -get=true -input=false
+            terraform init -input=false
   tf_plan:
     docker:
       - image: hashicorp/terraform
@@ -59,7 +59,7 @@ jobs:
           name: Run Terraform plan
           command: |
             ls -la
-            terraform plan -out=tfplan -input=false
+            terraform plan
   tf_apply:
     docker:
       - image: hashicorp/terraform
@@ -70,28 +70,28 @@ jobs:
             - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
       - run:
           name: Run Terraform apply
-          command: terraform apply -input=false tfplan
+          command: terraform apply
 workflows:
   version: 2
   build-and-deploy:
     jobs:
-      # - packer_validate:
-      #     filters:
-      #       branches:
-      #         only:
-      #           - master
-      # - packer_build:
-      #     context: antoni-global
-      #     requires:
-      #       - packer_validate
+      - packer_validate:
+          filters:
+            branches:
+              only:
+                - master
+      - packer_build:
+          context: antoni-global
+          requires:
+            - packer_validate
       - tf_init:
           context: antoni-global
-          # requires:
-          #   - packer_build
+          requires:
+            - packer_build
       - tf_plan:
           context: antoni-global
-          # requires:
-          #   - packer_build
+          requires:
+            - packer_build
       - tf_apply:
           context: antoni-global
           requires:

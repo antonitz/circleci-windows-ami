@@ -1,3 +1,11 @@
+variable "profile" {
+  description = "profile to use for aws"
+}
+
+variable "region" {
+  description = "region to deploy"
+}
+
 variable "environment" {
   description = "The environment"
 }
@@ -17,7 +25,7 @@ variable "availability_zones" {
 
 variable "public_subnet_ids" {
   type        = "list"
-  description = "The private subnets to use"
+  description = "The public subnets to use"
 }
 variable "instance_type" {
   description = "The instance type"

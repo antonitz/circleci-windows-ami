@@ -1,7 +1,7 @@
-/* User Data Scripts  - file locale below called from env pwd */
-/* data "template_file" "userdata" {
-  template = "${file("./modules/windows-master/userdata.sh")}"
-} */
+provider "aws" {
+  profile = "${var.profile}"
+  region  = "${var.region}"
+}
 
 terraform {
   backend "s3" {}
@@ -10,11 +10,11 @@ terraform {
 /* Lookup latest Amazon Windows AMI */
 data "aws_ami" "windows_ami" {
   most_recent = true
-  owners     = ["self", "amazon"]
+  owners     = ["self"]
 
   filter {
     name   = "name"
-    values = ["*Windows_Server-*"]
+    values = ["windows-server-*"]
   }
 }
 # Master Server
@@ -22,17 +22,10 @@ resource "aws_instance" "windows" {
   ami                         = "${data.aws_ami.windows_ami.image_id}"
   availability_zone           = "${var.availability_zones[0]}"
   instance_type               = "${var.instance_type}"
-  user_data                   = "${data.template_file.userdata.rendered}"
   key_name                    = "windows_dev"
   vpc_security_group_ids      = ["${aws_security_group.windows_sg.id}"]
   subnet_id                   = "${var.public_subnet_ids[0]}"
   associate_public_ip_address = false
-
-  # Config used by the Application Load Balancer
-  subnet_ids                  = "${data.aws_subnet_ids.default.ids}"
-  aws_ssl_certificate_arn     = "${var.aws_ssl_certificate_arn}"
-  dns_zone                    = "${var.dns_zone}"
-  app_dns_name                = "${var.app_dns_name}"
 
   tags {
     Name        = "${var.app}-${var.environment}-windows"
