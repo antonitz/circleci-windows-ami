@@ -47,14 +47,14 @@ jobs:
           command: |
             terraform init
       - persist_to_workspace:
-          root: /tmp/build
+          root: /main.tf
   tf_plan:
     docker:
       - image: hashicorp/terraform
     working_directory:
     steps:
       - attach_workspace:
-          at: /tmp/build
+          at: /main.tf
       - checkout
       - add_ssh_keys:
           fingerprints:
@@ -90,14 +90,14 @@ workflows:
       #     context: antoni-global
       #     requires:
       #       - packer_validate
-      - tf_init:
-          context: antoni-global
-          # requires:
-            # - packer_build
-      - tf_plan:
-          context: antoni-global
-          # requires:
-          #   - packer_build
+      # - tf_init:
+      #     context: antoni-global
+      #     # requires:
+      #       # - packer_build
+      # - tf_plan:
+      #     context: antoni-global
+      #     # requires:
+      #     #   - packer_build
       - tf_apply:
           context: antoni-global
           requires:
