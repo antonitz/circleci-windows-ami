@@ -26,8 +26,3 @@ variable "public_subnet_ids" {
 variable "instance_type" {
   description = "The instance type"
 }
-
-/* variable "ssh_access_ips" {
-  type        = "list"
-  description = "List of IPs to allow SSH access to Bastion"
-} */

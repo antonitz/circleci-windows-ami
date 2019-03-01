@@ -17,7 +17,6 @@ resource "aws_instance" "windows" {
   ami                         = "${data.aws_ami.windows_ami.image_id}"
   availability_zone           = "${var.availability_zones[0]}"
   instance_type               = "${var.instance_type}"
-  # key_name                    = "windows_dev"
   vpc_security_group_ids      = ["${aws_security_group.windows_sg.id}"]
   subnet_id                   = "${var.public_subnet_ids[0]}"
   associate_public_ip_address = false
