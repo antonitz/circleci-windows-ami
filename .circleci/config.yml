@@ -71,7 +71,7 @@ jobs:
       - run:
           name: Run Terraform apply
           command: |
-            terraform apply
+            terraform init && terraform apply
 workflows:
   version: 2
   build-and-deploy:
