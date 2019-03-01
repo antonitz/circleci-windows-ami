@@ -95,4 +95,4 @@ workflows:
       #     #   - packer_build
       - tf_apply:
           context: antoni-global
-          type: approval
+          type: approval 
