@@ -1,64 +1,64 @@
 version: 2
 jobs:
-  packer_validate:
-    docker:
-      - image: hashicorp/packer:1.1.1
-    working_directory: ~/packer
-    steps:
-      - checkout
-      - run:
-          name: Validate Packer Template
-          command: cd packer && packer validate ./windows-2016.json
-  packer_build:
-    docker:
-      - image: hashicorp/packer:1.1.1
-    working_directory: ~/packer
-    steps:
-      - checkout
-      - run:
-          name: Install AWS CLI & a few more tools needed for this job
-          command: |
-            apk -v --update add python py-pip groff less mailcap jq
-            pip install --upgrade awscli
-            apk -v --purge del py-pip
-            rm /var/cache/apk/*
-      - run:
-          name: Build AMI
-          command: |-
-            cd packer && PACKER_LOG=1 AWS_TIMEOUT_SECONDS=600 packer build -machine-readable windows-2016.json | tee build.log
-            export AMI_ID=`grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2`
-            while [[ `aws ec2 describe-images --image-ids $AMI_ID --region us-east-1 | jq .Images[0].State | sed -e 's/^"//' -e 's/"$//'` != "available" ]]; \
-            do \
-            echo "Waiting for AMI to be available"; \
-            sleep 5; \
-            done
-          no_output_timeout: 10m
-  tf_init:
-    docker:
-      - image: hashicorp/terraform
-    working_directory: /tmp/build
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Run Terraform Initialization
-          command: |
-            terraform init
-  tf_plan:
-    docker:
-      - image: hashicorp/terraform
-    working_directory:
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Run Terraform plan
-          command: |
-            terraform plan
+  # packer_validate:
+  #   docker:
+  #     - image: hashicorp/packer:1.1.1
+  #   working_directory: ~/packer
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Validate Packer Template
+  #         command: cd packer && packer validate ./windows-2016.json
+  # packer_build:
+  #   docker:
+  #     - image: hashicorp/packer:1.1.1
+  #   working_directory: ~/packer
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Install AWS CLI & a few more tools needed for this job
+  #         command: |
+  #           apk -v --update add python py-pip groff less mailcap jq
+  #           pip install --upgrade awscli
+  #           apk -v --purge del py-pip
+  #           rm /var/cache/apk/*
+  #     - run:
+  #         name: Build AMI
+  #         command: |-
+  #           cd packer && PACKER_LOG=1 AWS_TIMEOUT_SECONDS=600 packer build -machine-readable windows-2016.json | tee build.log
+  #           export AMI_ID=`grep 'artifact,0,id' build.log | cut -d, -f6 | cut -d: -f2`
+  #           while [[ `aws ec2 describe-images --image-ids $AMI_ID --region us-east-1 | jq .Images[0].State | sed -e 's/^"//' -e 's/"$//'` != "available" ]]; \
+  #           do \
+  #           echo "Waiting for AMI to be available"; \
+  #           sleep 5; \
+  #           done
+  #         no_output_timeout: 10m
+  # tf_init:
+  #   docker:
+  #     - image: hashicorp/terraform
+  #   working_directory: /tmp/build
+  #   steps:
+  #     - checkout
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
+  #     - run:
+  #         name: Run Terraform Initialization
+  #         command: |
+  #           terraform init
+  # tf_plan:
+  #   docker:
+  #     - image: hashicorp/terraform
+  #   working_directory:
+  #   steps:
+  #     - checkout
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
+  #     - run:
+  #         name: Run Terraform plan
+  #         command: |
+  #           terraform plan
   tf_apply:
     docker:
       - image: hashicorp/terraform
