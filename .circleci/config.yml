@@ -33,19 +33,6 @@ jobs:
             sleep 5; \
             done
           no_output_timeout: 10m
-  tf_apply:
-    docker:
-      - image: hashicorp/terraform
-    working_directory:
-    steps:
-      - checkout
-      - add_ssh_keys:
-          fingerprints:
-            - "7c:38:ae:f6:80:24:59:bd:6a:b5:97:d0:e7:50:62:67"
-      - run:
-          name: Run Terraform apply
-          command: |
-            terraform init && terraform apply -auto-approve
 workflows:
   version: 2
   build-and-deploy:
@@ -59,8 +46,3 @@ workflows:
           context: antoni-global
           requires:
             - packer_validate
-      - tf_apply:
-          context: antoni-global
-          requires:
-            - packer_build
-          # type: approval  
